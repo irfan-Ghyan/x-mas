@@ -187,7 +187,7 @@ export default function Home() {
       {/* Toggle Button */}
       <button 
         onClick={() => setMessageVisible(!messageVisible)} 
-        className="w-full max-w-md bg-white text-red-600 text-xl rounded-md p-4 relative mt-6 hover:bg-gray-200 transition z-10"
+        className="w-full max-w-md bg-green-600 text-white text-xl rounded-md p-4 relative mt-6 hover:bg-gray-200 transition z-10"
         aria-pressed={messageVisible}
       >
         {messageVisible ? 'Hide Personal Note' : 'VIEW'}
@@ -196,7 +196,7 @@ export default function Home() {
       {/* Conditional Personal Message */}
       {messageVisible && (
         <motion.div
-          className="mt-8 bg-white text-black p-4 rounded-lg shadow-lg max-w-md relative z-10"
+          className="mt-8 bg-green-600 text-white p-4 rounded-lg shadow-lg max-w-md relative z-10"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
