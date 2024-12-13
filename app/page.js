@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 export default function Home() {
   const [messageVisible, setMessageVisible] = useState(false);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [isMounted, setIsMounted] = useState(false); // To control client-side rendering
   const audioRef = useRef(null);
 
   // Function to handle manual audio play
@@ -24,6 +25,8 @@ export default function Home() {
 
   // Attempt to autoplay audio on component mount
   useEffect(() => {
+    setIsMounted(true); // Indicate that the component has mounted on the client
+
     if (audioRef.current) {
       audioRef.current.play()
         .then(() => {
@@ -50,6 +53,29 @@ export default function Home() {
     </svg>
   );
 
+  // Animated Runner Component
+  const Runner = ({ src, alt, initialX, animateX, duration, yPosition }) => (
+    <motion.div
+      className="runner"
+      initial={{ x: initialX, y: yPosition }}
+      animate={{ x: animateX, y: yPosition }}
+      transition={{
+        repeat: Infinity,
+        repeatType: 'loop',
+        duration: duration,
+        ease: 'linear',
+      }}
+    >
+      <Image
+        src={src}
+        alt={alt}
+        width={100}
+        height={100}
+        className="object-contain"
+      />
+    </motion.div>
+  );
+
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center text-center text-white p-4 overflow-hidden bg-black">
       
@@ -59,24 +85,26 @@ export default function Home() {
         style={{ backgroundImage: "url('/bg1.png')" }}
       />
 
-      {/* Snowfall Effect */}
-      <div className="snowflakes">
-        {[...Array(100)].map((_, i) => (
-          <div
-            key={i}
-            className="snowflake"
-            style={{
-              left: `${Math.random() * 100}vw`,
-              animationDuration: `${Math.random() * 10 + 5}s`, // 5s to 15s
-              transform: `translateX(${Math.random() * 20 - 10}px) scale(${Math.random() * 0.5 + 0.5})`, // Drift and scale
-              opacity: Math.random() * 0.5 + 0.5, // Opacity between 0.5 and 1
-              animationDelay: `${Math.random() * 10}s`, // Staggered start
-            }}
-          >
-            <Snowflake />
-          </div>
-        ))}
-      </div>
+      {/* Snowfall Effect - Only render on client side after mounting */}
+      {isMounted && (
+        <div className="snowflakes">
+          {[...Array(100)].map((_, i) => (
+            <div
+              key={i}
+              className="snowflake"
+              style={{
+                left: `${Math.random() * 100}vw`,
+                animationDuration: `${Math.random() * 10 + 5}s`, // 5s to 15s
+                transform: `translateX(${Math.random() * 20 - 10}px) scale(${Math.random() * 0.5 + 0.5})`, // Drift and scale
+                opacity: Math.random() * 0.5 + 0.5, // Opacity between 0.5 and 1
+                animationDelay: `${Math.random() * 10}s`, // Staggered start
+              }}
+            >
+              <Snowflake />
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Snowfall Styling */}
       <style jsx>{`
@@ -155,28 +183,11 @@ export default function Home() {
           z-index: 3;
         }
 
-        .runner1 {
-          top: 80%;
-        }
-
-        .runner2 {
-          top: 85%;
-        }
-
-        .runner3 {
-          top: 90%;
-        }
-
         /* Responsive Adjustments */
         @media (max-width: 768px) {
           .runner {
             width: 60px;
             height: 60px;
-          }
-
-          .runner1, .runner2, .runner3 {
-            top: auto;
-            bottom: 10%;
           }
         }
       `}</style>
@@ -204,11 +215,11 @@ export default function Home() {
           alt="Decorative Christmas Cap"
           width={200}
           height={200}
+          className="object-contain"
         />
       </div>
 
       {/* Toggle Button */}
-      
       <button 
         onClick={() => setMessageVisible(!messageVisible)} 
         className="w-full max-w-md bg-white text-red-600 text-xl rounded-md p-4 relative mt-6 hover:bg-gray-200 transition z-10"
@@ -247,15 +258,13 @@ export default function Home() {
       </audio>
 
       {/* Overlay Play Button if Audio Not Playing */}
-      {!isAudioPlaying && (
+      {!isAudioPlaying && isMounted && (
         <div className="overlay" onClick={handlePlayAudio}>
           <button className="play-button">Play Music</button>
         </div>
       )}
 
-      {/* Animated Runners */}
-      {/* Runner 1 */}
-     
+
       {/* Runners Styling */}
       <style jsx>{`
         .runner {
@@ -264,32 +273,14 @@ export default function Home() {
           z-index: 3;
         }
 
-        .runner1 {
-          top: 80%;
-        }
-
-        .runner2 {
-          top: 85%;
-        }
-
-        .runner3 {
-          top: 90%;
-        }
-
         /* Responsive Adjustments */
         @media (max-width: 768px) {
           .runner {
             width: 60px;
             height: 60px;
           }
-
-          .runner1, .runner2, .runner3 {
-            top: auto;
-            bottom: 10%;
-          }
         }
       `}</style>
-      
     </div>
   );
 }
