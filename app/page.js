@@ -72,7 +72,7 @@ export default function Home() {
       
 
       <audio controls className="absolute top-2 right-2">
-        <source src="public/jingle-bells.mp3" type="audio/mpeg" />
+        <source src="/jingle-bells.mp3" type="audio/mpeg" />
       </audio>
       
     </div>
