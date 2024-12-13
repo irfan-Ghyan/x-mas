@@ -6,22 +6,8 @@ import { motion } from 'framer-motion';
 
 export default function Home() {
   const [messageVisible, setMessageVisible] = useState(false);
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isMounted, setIsMounted] = useState(false); // To control client-side rendering
   const audioRef = useRef(null);
-
-  // Function to handle manual audio play
-  const handlePlayAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.play()
-        .then(() => {
-          setIsAudioPlaying(true);
-        })
-        .catch(error => {
-          console.log('Play attempt failed:', error);
-        });
-    }
-  };
 
   // Attempt to autoplay audio on component mount
   useEffect(() => {
@@ -29,9 +15,6 @@ export default function Home() {
 
     if (audioRef.current) {
       audioRef.current.play()
-        .then(() => {
-          setIsAudioPlaying(true);
-        })
         .catch(error => {
           console.log('Autoplay prevented:', error);
           // Audio will not play automatically; user needs to initiate
@@ -84,6 +67,17 @@ export default function Home() {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
         style={{ backgroundImage: "url('/bg1.png')" }}
       />
+
+      {/* Company Logo at the Top */}
+      <div className="absolute top-4 left-4 z-10">
+        <Image 
+          src="/logo1.png" // Replace with your logo file name
+          alt="teleios"
+          width={250} // Adjust the width as needed
+          height={150} // Adjust the height as needed
+          className="object-contain"
+        />
+      </div>
 
       {/* Snowfall Effect - Only render on client side after mounting */}
       {isMounted && (
@@ -145,35 +139,6 @@ export default function Home() {
           overflow: hidden;
           z-index: 1;
           pointer-events: none;
-        }
-
-        /* Overlay for Play Button */
-        .overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.5);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 20;
-        }
-
-        .play-button {
-          padding: 1rem 2rem;
-          background: white;
-          color: black;
-          border: none;
-          border-radius: 5px;
-          font-size: 1.2rem;
-          cursor: pointer;
-          transition: background 0.3s;
-        }
-
-        .play-button:hover {
-          background: #f0f0f0;
         }
 
         /* Runners Styling */
@@ -257,13 +222,40 @@ export default function Home() {
         Your browser does not support the audio element.
       </audio>
 
-      {/* Overlay Play Button if Audio Not Playing */}
-      {!isAudioPlaying && isMounted && (
-        <div className="overlay" onClick={handlePlayAudio}>
-          <button className="play-button">Play Music</button>
-        </div>
-      )}
+      {/* Animated Runners */}
+      {isMounted && (
+        <>
+          {/* Runner 1 - Left to Right */}
+          <Runner 
+            src="/runner1.png" 
+            alt="Running Person 1" 
+            initialX="-10%" 
+            animateX="110%" 
+            duration={15} 
+            yPosition="80%" 
+          />
 
+          {/* Runner 2 - Right to Left */}
+          <Runner 
+            src="/runner2.png" 
+            alt="Running Person 2" 
+            initialX="110%" 
+            animateX="-10%" 
+            duration={20} 
+            yPosition="85%" 
+          />
+
+          {/* Runner 3 - Left to Right */}
+          <Runner 
+            src="/runner3.png" 
+            alt="Running Person 3" 
+            initialX="-10%" 
+            animateX="110%" 
+            duration={18} 
+            yPosition="90%" 
+          />
+        </>
+      )}
 
       {/* Runners Styling */}
       <style jsx>{`
