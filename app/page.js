@@ -6,19 +6,30 @@ import { motion } from 'framer-motion';
 
 export default function Home() {
   const [messageVisible, setMessageVisible] = useState(false);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isMounted, setIsMounted] = useState(false); // To control client-side rendering
   const audioRef = useRef(null);
+
+  // Function to handle audio playback
+  const handlePlayAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.play()
+        .then(() => {
+          setIsAudioPlaying(true);
+        })
+        .catch(error => {
+          console.log('Autoplay failed:', error);
+          // Since the user doesn't want a play button, we won't handle the error further
+        });
+    }
+  };
 
   // Attempt to autoplay audio on component mount
   useEffect(() => {
     setIsMounted(true); // Indicate that the component has mounted on the client
 
     if (audioRef.current) {
-      audioRef.current.play()
-        .catch(error => {
-          console.log('Autoplay prevented:', error);
-          // Audio will not play automatically; user needs to initiate
-        });
+      handlePlayAudio();
     }
   }, []);
 
@@ -36,7 +47,6 @@ export default function Home() {
     </svg>
   );
 
-  // Animated Runner Component
   const Runner = ({ src, alt, initialX, animateX, duration, yPosition }) => (
     <motion.div
       className="runner"
@@ -62,24 +72,22 @@ export default function Home() {
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center text-center text-white p-4 overflow-hidden bg-black">
       
-      {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
         style={{ backgroundImage: "url('/bg1.png')" }}
       />
 
-      {/* Company Logo at the Top */}
-      <div className="absolute top-4 left-4 z-10">
+      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
         <Image 
-          src="/logo1.png" // Replace with your logo file name
-          alt="teleios"
-          width={250} // Adjust the width as needed
-          height={150} // Adjust the height as needed
+          src="/logo1.png"
+          alt="Logo"
+          width={250}
+          height={250}
           className="object-contain"
         />
       </div>
 
-      {/* Snowfall Effect - Only render on client side after mounting */}
+
       {isMounted && (
         <div className="snowflakes">
           {[...Array(100)].map((_, i) => (
@@ -88,10 +96,10 @@ export default function Home() {
               className="snowflake"
               style={{
                 left: `${Math.random() * 100}vw`,
-                animationDuration: `${Math.random() * 10 + 5}s`, // 5s to 15s
-                transform: `translateX(${Math.random() * 20 - 10}px) scale(${Math.random() * 0.5 + 0.5})`, // Drift and scale
-                opacity: Math.random() * 0.5 + 0.5, // Opacity between 0.5 and 1
-                animationDelay: `${Math.random() * 10}s`, // Staggered start
+                animationDuration: `${Math.random() * 10 + 5}s`, 
+                transform: `translateX(${Math.random() * 20 - 10}px) scale(${Math.random() * 0.5 + 0.5})`,
+                opacity: Math.random() * 0.5 + 0.5,
+                animationDelay: `${Math.random() * 10}s`, 
               }}
             >
               <Snowflake />
@@ -100,7 +108,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* Snowfall Styling */}
+
       <style jsx>{`
         .snowflake {
           position: absolute;
@@ -165,7 +173,7 @@ export default function Home() {
         transition={{ duration: 1 }}
       >
         MERRY CHRISTMAS
-        <span className='text-white mt-4 block text-4xl md:text-5xl'>TELEIOS GLOBAL</span>
+        <span className='text-white mt-4 block text-4xl md:text-5xl'>Teleios Global</span>
       </motion.h1>
 
       {/* Greeting Message */}
@@ -187,7 +195,7 @@ export default function Home() {
       {/* Toggle Button */}
       <button 
         onClick={() => setMessageVisible(!messageVisible)} 
-        className="w-full max-w-md bg-green-600 text-white text-xl rounded-md p-4 relative mt-6 hover:bg-gray-200 transition z-10"
+        className="w-full max-w-md bg-white text-red-600 text-xl rounded-md p-4 relative mt-6 hover:bg-gray-200 transition z-10"
         aria-pressed={messageVisible}
       >
         {messageVisible ? 'Hide Personal Note' : 'VIEW'}
@@ -196,7 +204,7 @@ export default function Home() {
       {/* Conditional Personal Message */}
       {messageVisible && (
         <motion.div
-          className="mt-8 bg-green-600 text-white p-4 rounded-lg shadow-lg max-w-md relative z-10"
+          className="mt-8 bg-white text-black p-4 rounded-lg shadow-lg max-w-md relative z-10"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
@@ -223,7 +231,6 @@ export default function Home() {
       </audio>
 
 
-      {/* Runners Styling */}
       <style jsx>{`
         .runner {
           position: absolute;
@@ -239,6 +246,7 @@ export default function Home() {
           }
         }
       `}</style>
+      
     </div>
   );
 }
