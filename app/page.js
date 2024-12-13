@@ -222,40 +222,6 @@ export default function Home() {
         Your browser does not support the audio element.
       </audio>
 
-      {/* Animated Runners */}
-      {isMounted && (
-        <>
-          {/* Runner 1 - Left to Right */}
-          <Runner 
-            src="/runner1.png" 
-            alt="Running Person 1" 
-            initialX="-10%" 
-            animateX="110%" 
-            duration={15} 
-            yPosition="80%" 
-          />
-
-          {/* Runner 2 - Right to Left */}
-          <Runner 
-            src="/runner2.png" 
-            alt="Running Person 2" 
-            initialX="110%" 
-            animateX="-10%" 
-            duration={20} 
-            yPosition="85%" 
-          />
-
-          {/* Runner 3 - Left to Right */}
-          <Runner 
-            src="/runner3.png" 
-            alt="Running Person 3" 
-            initialX="-10%" 
-            animateX="110%" 
-            duration={18} 
-            yPosition="90%" 
-          />
-        </>
-      )}
 
       {/* Runners Styling */}
       <style jsx>{`
