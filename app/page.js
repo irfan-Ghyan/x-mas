@@ -7,10 +7,9 @@ import { motion } from 'framer-motion';
 export default function Home() {
   const [messageVisible, setMessageVisible] = useState(false);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-  const [isMounted, setIsMounted] = useState(false); // To control client-side rendering
+  const [isMounted, setIsMounted] = useState(false); 
   const audioRef = useRef(null);
 
-  // Function to handle audio playback
   const handlePlayAudio = () => {
     if (audioRef.current) {
       audioRef.current.play()
@@ -19,14 +18,13 @@ export default function Home() {
         })
         .catch(error => {
           console.log('Autoplay failed:', error);
-          // Since the user doesn't want a play button, we won't handle the error further
+
         });
     }
   };
 
-  // Attempt to autoplay audio on component mount
   useEffect(() => {
-    setIsMounted(true); // Indicate that the component has mounted on the client
+    setIsMounted(true); 
 
     if (audioRef.current) {
       handlePlayAudio();
@@ -167,21 +165,19 @@ export default function Home() {
 
       {/* Festive Header */}
       <motion.h1
-        className="text-6xl md:text-8xl font-black mb-4 relative text-green-600 py-4 z-10"
+        className="text-4xl md:text-4xl font-black mb-4 relative text-green-600 py-4 z-10"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
         MERRY CHRISTMAS
-        <span className='text-white mt-4 block text-4xl md:text-5xl'>Teleios Global</span>
+        <span className='text-white mt-4 block text-4xl md:text-4xl'>Teleios Global</span>
       </motion.h1>
 
-      {/* Greeting Message */}
       <p className="text-xl md:text-2xl mb-8 relative z-10">
         Wishing everyone at Teleios Global a joyful and warm Christmas,<br/>filled with happiness, togetherness, and cherished moments!
       </p>
 
-      {/* Decorative Image */}
       <div className="mt-10 relative z-10">
         <Image 
           src="/cap.png"
@@ -192,16 +188,14 @@ export default function Home() {
         />
       </div>
 
-      {/* Toggle Button */}
       <button 
         onClick={() => setMessageVisible(!messageVisible)} 
         className="w-full max-w-md bg-green-600 text-white text-xl rounded-md p-4 relative mt-6 transition z-10"
         aria-pressed={messageVisible}
       >
-        {messageVisible ? 'Hide Personal Note' : 'VIEW'}
+        {messageVisible ? 'HIDE MESSAGE' : 'VIEW MESSAGE'}
       </button>
       
-      {/* Conditional Personal Message */}
       {messageVisible && (
         <motion.div
           className="mt-8 bg-green-600 text-white p-4 rounded-lg shadow-lg max-w-md relative z-10"
