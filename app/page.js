@@ -178,7 +178,7 @@ export default function Home() {
         Wishing everyone at Teleios Global a joyful and warm Christmas,<br/>filled with happiness, togetherness, and cherished moments!
       </p>
 
-      <div className="mt-10 relative z-10">
+      <div className="mt-4 relative z-10">
         <Image 
           src="/cap.png"
           alt="Decorative Christmas Cap"
