@@ -163,7 +163,6 @@ export default function Home() {
         }
       `}</style>
 
-      {/* Festive Header */}
       <motion.h1
         className="text-4xl md:text-4xl font-black mb-4 relative text-green-600 py-4 z-10"
         initial={{ opacity: 0, y: -50 }}
@@ -203,7 +202,6 @@ export default function Home() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-2xl font-semibold mb-2">A Special Message</h2>
           <p>
             This Christmas season, let us celebrate our accomplishments and look forward to new opportunities. 
             May the upcoming year bring Teleios Global even greater success, prosperity, and unity.
@@ -213,7 +211,7 @@ export default function Home() {
         </motion.div>
       )}
 
-      {/* Autoplay Audio */}
+
       <audio
         ref={audioRef}
         loop
